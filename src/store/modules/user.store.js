@@ -13,23 +13,24 @@ export default {
     },
   },
   mutations: {
-    setUser(state, user ) {
-      state.loggedinUser = user;
+    setUser(state, user) {
+      if (user?.id) state.loggedinUser = user;
+      else state.loggedinUser = null;
     },
   },
   actions: {
-    async login(context, cred ) {
+    async login(context, cred) {
       try {
         const user = await userService.login(cred);
-        context.commit('setUser', user )
+        context.commit('setUser', user)
         return user;
       } catch (err) {
         console.log(err.response);
       }
     },
-    async logout({commit}) {
-       await userService.logout();
-       commit('setUser', null)
+    async logout({ commit }) {
+      await userService.logout();
+      commit('setUser', null)
     }
   },
 };

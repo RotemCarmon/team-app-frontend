@@ -6,11 +6,11 @@
   </div>
 </template>
 <script>
-import appHeader from './cmps/app-header';
-import userMsg from './cmps/user-msg';
+import appHeader from "./cmps/app-header";
+import userMsg from "./cmps/user-msg";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     userMsg,
     appHeader,
@@ -81,12 +81,14 @@ label {
   position: fixed;
   justify-content: center;
   align-items: center;
-  top: 420px;
+  top: 570px;
   bottom: unset;
   display: flex;
+  flex-direction: column;
   height: 80px;
   width: 100%;
 }
+
 @media (max-width: 600px) {
   .list-footer {
     top: unset;

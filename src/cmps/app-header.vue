@@ -6,6 +6,7 @@
         <div class="divider"></div>
         <router-link to="/teams">List</router-link>
       </div>
+      {{$store.getters.loggedinUser}}
       <router-link v-if="!loggedinUser" to="/login">Login</router-link>
       <a v-else @click="logout">Logout</a>
     </div>
@@ -14,17 +15,18 @@
 
 <script>
 export default {
-  name: 'app-header',
+  name: "app-header",
   computed: {
     loggedinUser() {
       return this.$store.getters.loggedinUser;
-    }
+    },
   },
   methods: {
     async logout() {
-      await this.$store.dispatch('logout');
-      this.$router.push('/').catch(()=>{})
-    }
+      await this.$store.dispatch("logout");
+      if (!this.$router.currentRoute.path === "/")
+        this.$router.push("/").catch(() => {});
+    },
   },
 };
 </script>

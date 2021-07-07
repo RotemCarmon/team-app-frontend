@@ -5,7 +5,9 @@
         <tr>
           <th>Member 1</th>
           <th>Member 2</th>
+          <th>Member 3</th>
           <th></th>
+          <!-- <th></th> -->
         </tr>
       </thead>
       <tbody>
@@ -16,11 +18,19 @@
         >
           <td>{{ team.member1 }}</td>
           <td>{{ team.member2 }}</td>
-          <td class="remove-team" @click="removeTeam(team.id)">X</td>
+          <td>{{ team.member3 }}</td>
+          <!-- <td>{{ team._id }}</td> -->
+          <td class="remove-team" @click="removeTeam(team._id)">X</td>
         </tr>
       </tbody>
     </table>
     <div class="list-footer">
+      <div class="students-load">
+        <h3>enter students as a CSV text</h3>
+        <input class="form-el" type="text" v-model="students" />
+        <pre>{{ students }}</pre>
+        <button class="btn" @click="changeStudents">Load Students</button>
+      </div>
       <export-sheet />
     </div>
   </section>
@@ -28,11 +38,16 @@
 
 
 <script>
-import exportSheet from '../cmps/export-sheet';
+import exportSheet from "../cmps/export-sheet";
 export default {
-  name: 'team-list',
+  name: "team-list",
+  data() {
+    return {
+      students: null,
+    };
+  },
   created() {
-    this.$store.dispatch('getTeams');
+    this.$store.dispatch("getTeams");
   },
   computed: {
     teamsForDisplay() {
@@ -41,7 +56,17 @@ export default {
   },
   methods: {
     removeTeam(teamId) {
-      this.$store.dispatch('removeTeam', teamId);
+      this.$store.dispatch("removeTeam", teamId);
+    },
+    changeStudents() {
+      if (this.students) this.$store.dispatch("changeStudents", this.students);
+      else {
+        console.log("No students found");
+        this.$store.commit("sendMsg", {
+          txt: "You must enter students to the list, CSV only",
+          type: "warning",
+        });
+      }
     },
   },
   components: {
@@ -53,6 +78,10 @@ export default {
 <style lang="scss" scoped>
 .team-list-container {
   padding-top: 20px;
+
+  .students-load {
+    margin-bottom: 30px;
+  }
 
   table {
     margin: auto;

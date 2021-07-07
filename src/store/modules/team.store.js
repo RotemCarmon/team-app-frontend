@@ -30,13 +30,26 @@ export default {
       state.teams = teams;
     },
     removeTeam(state, teamId) {
-      const idx = state.teams.findIndex(team => team.id === teamId);
+      const idx = state.teams.findIndex(team => team._id === teamId);
       console.log('idx:', idx)
       if (idx === -1) throw new Error('Cant find team id: ' + teamId)
       state.teams.splice(idx, 1)
-    }
+    },
   },
   actions: {
+    async changeStudents({ commit, dispatch }, sutdents) {
+      const res = await teamService.addStudents(sutdents);
+      let msg;
+      if (res.type === 'Custom Message' || res.type === 'message') {
+        const type = (res.code === 1) ? 'success' : 'warning';
+        msg = { txt: res.message || 'please login', type }
+      } else {
+        const txt = `Students Submitted successfully`;
+        dispatch('getTeams')
+        msg = { txt, type: 'success' }
+      }
+      commit('sendMsg', msg);
+    },
     async getTeams({ commit }) {
       const teams = await teamService.getTeams();
       commit('setTeams', teams)
@@ -47,10 +60,10 @@ export default {
       if (res.type === 'Custom Message') {
         const type = (res.code === 1) ? 'success' : 'warning';
 
-        msg = { txt: res.message, type}
+        msg = { txt: res.message, type }
       }
       else {
-        const txt = `Submitted successfully\nTeam: ${team.member1} & ${team.member2}`;
+        const txt = `Submitted successfully\nTeam: ${team.member1} & ${team.member2} ${(team.member3) ? ' & ' + team.member3 : ''}`;
         msg = { txt, type: 'success' }
       }
       commit('sendMsg', msg);
@@ -58,7 +71,8 @@ export default {
     },
     async removeTeam({ commit }, teamId) {
       try {
-        await teamService.removeTeam(teamId);
+        const bla = await teamService.removeTeam(teamId);
+        console.log(bla);
         commit('removeTeam', teamId)
       } catch (err) {
         console.log(err);

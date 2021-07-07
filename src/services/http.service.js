@@ -35,7 +35,6 @@ async function ajax(endpoint, method = 'get', data = null) {
         })
         return res.data;
     } catch (err) {
-        // console.log(err.response);
         if (err.response.status === 401) {
             return { type: 'message', txt: 'Wrong username or password' }
         }

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="message" class="screen">
+  <div v-if="message" class="screen" @click.self="closeMsg">
     <div class="user-msg modal" :class="message.type">
       <h1>{{ message.txt }}</h1>
       <button class="btn" @click="closeMsg">Close</button>
@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'user-msg',
+  name: "user-msg",
   computed: {
     message() {
       return this.$store.getters.message;
@@ -18,7 +18,7 @@ export default {
 
   methods: {
     closeMsg() {
-      this.$store.commit('sendMsg', null);
+      this.$store.commit("sendMsg", null);
     },
   },
 };
@@ -34,7 +34,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.76);
 }
 .modal {
-   white-space: pre-line;
+  white-space: pre-line;
   position: fixed;
   flex-direction: column;
   align-items: center;
@@ -52,10 +52,9 @@ export default {
   background-color: rgba(255, 255, 255, 0.973);
   border-radius: 3px;
 }
-@media(max-width:480px) {
+@media (max-width: 480px) {
   .modal {
-  width: 90%;
-
+    width: 90%;
   }
 }
 .warning {
