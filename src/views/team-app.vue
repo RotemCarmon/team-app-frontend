@@ -37,7 +37,6 @@
         {{ student }}
       </option>
     </select>
-
     <div class="list-footer">
       <button @click="toggleStudent" class="toggle-member-btn btn">
         toggle member

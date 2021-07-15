@@ -34,15 +34,15 @@ export default {
     // -- Prepare data --
     async getUnsubmited() {
       const students = await teamService.getStudents();
-      return (
-        students
-          .filter((student) => {
-            return this.teams.every(({ member1, member2 }) => {
-              return student !== member1 && student !== member2;
-            });
-          })
-          .map((t) => ({ unsubmited: t }))
-      );
+      return students
+        .filter((student) => {
+          return this.teams.every(({ member1, member2, member3 }) => {
+            return (
+              student !== member1 && student !== member2 && student !== member3
+            );
+          });
+        })
+        .map((t) => ({ unsubmited: t }));
     },
     getDuplicated() {
       const students = [];
@@ -66,9 +66,7 @@ export default {
       });
 
       dupStudents = Array.from(new Set(dupStudents));
-      return (
-        dupStudents.map((s) => ({ duplicated: s }))
-      );
+      return dupStudents.map((s) => ({ duplicated: s }));
     },
     getTeams() {
       return this.teams.map((t) => {

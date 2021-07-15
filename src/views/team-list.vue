@@ -1,34 +1,36 @@
 <template>
   <section class="team-list-container">
-    <table class="team-list" v-if="teamsForDisplay">
-      <thead>
-        <tr>
-          <th>Member 1</th>
-          <th>Member 2</th>
-          <th>Member 3</th>
-          <th></th>
-          <!-- <th></th> -->
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="team in teamsForDisplay"
-          :key="team.id"
-          :class="{ 'is-match': team.isMatch }"
-        >
-          <td>{{ team.member1 }}</td>
-          <td>{{ team.member2 }}</td>
-          <td>{{ team.member3 }}</td>
-          <!-- <td>{{ team._id }}</td> -->
-          <td class="remove-team" @click="removeTeam(team._id)">X</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-container">
+      <table class="team-list" v-if="teamsForDisplay">
+        <thead>
+          <tr>
+            <th>Member 1</th>
+            <th>Member 2</th>
+            <th>Member 3</th>
+            <th></th>
+            <!-- <th></th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="team in teamsForDisplay"
+            :key="team.id"
+            :class="{ 'is-match': team.isMatch }"
+          >
+            <td>{{ team.member1 }}</td>
+            <td>{{ team.member2 }}</td>
+            <td>{{ team.member3 }}</td>
+            <!-- <td>{{ team._id }}</td> -->
+            <td class="remove-team" @click="removeTeam(team._id)">X</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div class="list-footer">
       <div class="students-load">
         <h3>enter students as a CSV text</h3>
         <input class="form-el" type="text" v-model="students" />
-        <pre>{{ students }}</pre>
+        <p>{{ students }}</p>
         <button class="btn" @click="changeStudents">Load Students</button>
       </div>
       <export-sheet />
@@ -81,6 +83,11 @@ export default {
 
   .students-load {
     margin-bottom: 30px;
+  }
+
+  .table-container{
+    max-height: 350px;
+    overflow-x:overlay;
   }
 
   table {

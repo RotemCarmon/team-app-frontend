@@ -87,6 +87,7 @@ label {
   flex-direction: column;
   height: 80px;
   width: 100%;
+
 }
 
 @media (max-width: 600px) {

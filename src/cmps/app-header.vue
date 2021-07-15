@@ -6,7 +6,6 @@
         <div class="divider"></div>
         <router-link to="/teams">List</router-link>
       </div>
-      {{$store.getters.loggedinUser}}
       <router-link v-if="!loggedinUser" to="/login">Login</router-link>
       <a v-else @click="logout">Logout</a>
     </div>
@@ -24,8 +23,9 @@ export default {
   methods: {
     async logout() {
       await this.$store.dispatch("logout");
-      if (!this.$router.currentRoute.path === "/")
-        this.$router.push("/").catch(() => {});
+      const goTo = "/";
+      if (!this.$router.currentRoute.path === goTo)
+        this.$router.push(goTo).catch(() => {});
     },
   },
 };
